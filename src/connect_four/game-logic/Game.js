@@ -1,19 +1,24 @@
+import {CellValueEnum} from "../enum/cellValueEnum";
+
 class GameBoard {
-  constructor () {
-    this.board = new Array(6)
-      .fill(new Array(7).fill(0))
+  constructor (height, width) {
+    this.height = height
+    this.width = width
+    this.board = new Array(this.height)
+      .fill(new Array(this.width).fill(0))
   }
 
   placeDice (color, columnNumber) {
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.height; i++) {
       if (this.board[columnNumber][i] === 0) {
         this.board[columnNumber][i] = color
+        break
       }
     }
   }
 
   isPlayable (columnNumber) {
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.height; i++) {
       if (this.board[columnNumber][i] === 0) {
         return true
       }
@@ -29,9 +34,9 @@ class Player {
 }
 
 class Game {
-  constructor () {
-    this.board = new GameBoard()
-    this.players = [new Player('RED'), new Player('BLUE')]
+  constructor (boardHeight, boardWidth) {
+    this.board = new GameBoard(boardHeight, boardWidth)
+    this.players = [new Player(CellValueEnum.RED), new Player(CellValueEnum.BLUE)]
     this.currentPlayer = this.players[0]
   }
 
